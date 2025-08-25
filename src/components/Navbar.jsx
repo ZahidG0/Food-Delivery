@@ -6,7 +6,7 @@ import { MdFastfood } from 'react-icons/md';
 import { dataContext } from '../context/UserContext';
 
 const Navbar = () => {
-  const { input, setInput, cartItems, setCartItems } = useContext(dataContext);
+  const { input, setInput, cartItems, setCartItems, showCart, setShowCart } = useContext(dataContext);
 
   useEffect(() => {
     const filteredData = cartItems.filter((item) => item.food_name.toLowerCase().includes(input.toLowerCase()));
@@ -27,7 +27,7 @@ const Navbar = () => {
       </form>
 
       {/* Shopping Cart */}
-      <div className='flex items-center justify-between w-16 h-16 px-4 rounded-md shadow-md bg-white relative'>
+      <div className='flex items-center justify-between w-16 h-16 px-4 rounded-md shadow-md bg-white relative' onClick={() => setShowCart(!showCart)}>
         <span className='text-xl absolute top-1.5 right-2.5 text-red-500 font-semibold'>0</span>
         <FaShoppingBasket className='text-3xl text-green-500' />
       </div>

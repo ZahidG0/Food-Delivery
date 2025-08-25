@@ -4,10 +4,12 @@ import { categories } from './../components/Category';
 import Cart from '../components/Cart';
 import { food_items } from '../db/food';
 import { dataContext } from '../context/UserContext';
+import { RxCross2 } from 'react-icons/rx';
+import CartItems from '../components/CartItems';
 
 const Home = () => {
 
-  const { cartItems, setCartItems } = useContext(dataContext);
+  const { cartItems, setCartItems, showCart, setShowCart } = useContext(dataContext);
 
     function filterItems (type) {
       if(type === "All") {
@@ -30,6 +32,17 @@ const Home = () => {
           ))}
         </div>
         <Cart cartItems={cartItems} />
+
+        {/* Cart Items */}
+
+        <div className={`w-full md:w-[40vw] h-[100%] fixed top-0 right-0 bg-white/90 shadow-2xl backdrop-blur-md transition-all duration-300 overflow-y-auto ${showCart ? "translate-x-0" : "translate-x-full"}`}>
+
+          <header className='w-full flex items-center justify-between p-4 border-b'>
+            <span className='font-semibold text-green-500 text-3xl'>Order Items</span>
+            <RxCross2 className='text-red-500 hover:text-black text-4xl cursor-pointer hover:scale-110 transition-all duration-200' onClick={() => setShowCart(false)} />
+          </header>
+          <CartItems />
+        </div>
     </div>
   )
 }
