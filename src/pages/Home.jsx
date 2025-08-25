@@ -1,24 +1,13 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Navbar from '../components/Navbar';
 import { categories } from './../components/Category';
 import Cart from '../components/Cart';
 import { food_items } from '../db/food';
+import { dataContext } from '../context/UserContext';
 
 const Home = () => {
-  const [cartItems, setCartItems] = useState(food_items);
-  
-    // function filterItems(type) {
-    //   const filters = {
-    //     "All": () => food_items,
-    //     "Brackfast": () => food_items.filter(item => item.food_category === "breakfast"),
-    //     "Burger": () => food_items.filter(item => item.food_category === "burger"),
-    //     "Dessert": () => food_items.filter(item => item.food_category === "dessert"),
-    //     "Lunch": () => food_items.filter(item => item.food_category === "main_course"),
-    //     "Dinner": () => food_items.filter(item => item.food_category === "main_course"),
-    //     "Natural": () => food_items.filter(item => item.food_type === "veg")
-    //   };
-    //   setCartItems(filters[type]() || food_items);
-    // }
+
+  const { cartItems, setCartItems } = useContext(dataContext);
 
     function filterItems (type) {
       if(type === "All") {
