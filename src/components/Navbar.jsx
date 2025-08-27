@@ -4,6 +4,7 @@ import { FaShoppingBasket } from 'react-icons/fa';
 import { IoSearch } from 'react-icons/io5';
 import { MdFastfood } from 'react-icons/md';
 import { dataContext } from '../context/UserContext';
+import { useSelector } from 'react-redux';
 
 const Navbar = () => {
   const { input, setInput, cartItems, setCartItems, showCart, setShowCart } = useContext(dataContext);
@@ -12,6 +13,8 @@ const Navbar = () => {
     const filteredData = cartItems.filter((item) => item.food_name.toLowerCase().includes(input.toLowerCase()));
     setCartItems(filteredData);
   }, [input]);
+
+  const items = useSelector(state => state.cart.items);
 
   return (
     <div className='w-full h-24 flex items-center justify-between px-10 bg-gray-100 shadow-md'>
@@ -28,7 +31,7 @@ const Navbar = () => {
 
       {/* Shopping Cart */}
       <div className='flex items-center justify-between w-16 h-16 px-4 rounded-md shadow-md bg-white relative' onClick={() => setShowCart(!showCart)}>
-        <span className='text-xl absolute top-1.5 right-2.5 text-red-500 font-semibold'>0</span>
+        <span className='text-xl absolute top-1.5 right-2.5 text-red-500 font-semibold'>{items.length}</span>
         <FaShoppingBasket className='text-3xl text-green-500' />
       </div>
     </div>

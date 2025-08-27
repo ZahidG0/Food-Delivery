@@ -1,8 +1,12 @@
 
 import { LuVegan } from 'react-icons/lu';
-import { GiChickenOven } from 'react-icons/gi';
+import { GiChickenOven } from 'react-icons/gi'
+import { useDispatch } from 'react-redux';
+import { addItem } from '../redux/cartSlice';
 
 const Cart = ({ cartItems }) => {
+  const dispatch = useDispatch();
+  const ADD_TO_CART_TEXT = 'Add to Cart';
 
   return (
     <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8 p-6'>
@@ -16,7 +20,9 @@ const Cart = ({ cartItems }) => {
               <div className='flex items-center justify-between'>
                 <p className='text-xl font-bold text-green-600'>${item.price}</p> <span className='text-green-500 text-sm'>{item.food_type === 'veg' ? <LuVegan /> : <GiChickenOven />} {item.food_type}</span>
               </div>
-              <button className='mt-4 w-full bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition-all duration-300'>Add to Cart</button>
+              <button className='mt-4 w-full bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition-all duration-300'
+              onClick={() => dispatch(addItem({ id: item.id, food_name: item.food_name, price: item.price, food_image: item.food_image, food_quantity: 1 }))}>
+              {ADD_TO_CART_TEXT}</button>
             </div>
           </div>
         ))

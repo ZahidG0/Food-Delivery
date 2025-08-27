@@ -6,6 +6,8 @@ import { food_items } from '../db/food';
 import { dataContext } from '../context/UserContext';
 import { RxCross2 } from 'react-icons/rx';
 import CartItems from '../components/CartItems';
+import { useSelector, useDispatch } from 'react-redux';
+import { incrementQuantity, decrementQuantity, removeItem } from '../redux/cartSlice';
 
 const Home = () => {
 
@@ -19,6 +21,20 @@ const Home = () => {
         setCartItems(newList);
       }
     }
+const items = useSelector(state => state.cart.items);
+  const reduxDispatch = useDispatch();
+
+  const handleIncrement = (id) => {
+    reduxDispatch(incrementQuantity(id));
+  };
+
+  const handleDecrement = (id) => {
+    reduxDispatch(decrementQuantity(id));
+  };
+
+  const handleDelete = (id) => {
+    reduxDispatch(removeItem(id));
+  };
 
   return (
     <div className='w-full bg-slate-200'>
@@ -41,7 +57,21 @@ const Home = () => {
             <span className='font-semibold text-green-500 text-3xl'>Order Items</span>
             <RxCross2 className='text-red-500 hover:text-black text-4xl cursor-pointer hover:scale-110 transition-all duration-200' onClick={() => setShowCart(false)} />
           </header>
-          <CartItems />
+          <div>
+            {
+              items.length > 0 ? (
+                items.map((item, index) => (
+                  <CartItems key={index} image={item.food_image} name={item.food_name} price={item.price} quantity={item.food_quantity} onIncrement={() => handleIncrement(item.id)} onDecrement={() => handleDecrement(item.id)} onDelete={() => handleDelete(item.id)} />
+                ))
+              ) : (
+                <div className='w-full h-[80vh] flex flex-col items-center justify-center gap-6'>
+                  <span className='text-6xl'>🛒</span>
+                  <h2 className='text-3xl font-semibold'>Your cart is empty</h2>
+                  <p className='text-center text-gray-600'>Add items to it now. Click on the + button to add items to your cart.</p>
+                </div>
+              )
+            }
+          </div>
         </div>
     </div>
   )
