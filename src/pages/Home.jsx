@@ -44,31 +44,36 @@ const Home = () => {
   const totalAmount = subTitle + deliveryFee + tax;
 
   return (
-    <div className='w-full bg-slate-200'>
+    <main className='w-full bg-slate-200'>
       <Navbar />
-      <div className='w-full pt-5 flex flex-wrap items-center justify-center gap-4'>
+      <section className='w-full pt-5' aria-label='Food Categories'>
+        <h1 className='sr-only'>Food Delivery - Order Online</h1>
+        <h2 className='sr-only'>Browse Food Categories</h2>
+        <div className='w-full flex flex-wrap items-center justify-center gap-4'>
         {categories.map((category) => (
           <div className='w-[150px] flex flex-col items-center justify-center gap-4 bg-white shadow-xl rounded-md p-4 hover:bg-green-200 cursor-pointer transition-all duration-300' onClick={() => filterItems(category.name)} key={category.id}>
             {category.image}
             <span>{category.name}</span>
           </div>
         ))}
-      </div>
-      <Cart cartItems={cartItems} />
+        </div>
+      </section>
+      <section aria-label='Food Menu'>
+        <h2 className='sr-only'>Our Menu</h2>
+        <Cart cartItems={cartItems} />
+      </section>
 
       {/* Cart Items */}
-
-      <div className={`w-full md:w-[40vw] h-[100%] fixed top-0 right-0 bg-white/90 shadow-2xl backdrop-blur-md transition-all duration-300 overflow-y-auto ${showCart ? "translate-x-0" : "translate-x-full"}`}>
-
+      <aside className={`w-full md:w-[40vw] h-[100%] fixed top-0 right-0 bg-white/90 shadow-2xl backdrop-blur-md transition-all duration-300 overflow-y-auto ${showCart ? "translate-x-0" : "translate-x-full"}`} aria-label='Shopping Cart'>
         <header className='w-full flex items-center justify-between p-4 border-b'>
-          <span className='font-semibold text-green-500 text-3xl'>Order Items</span>
+          <h2 className='font-semibold text-green-500 text-3xl'>Order Items</h2>
           <RxCross2 className='text-red-500 hover:text-black text-4xl cursor-pointer hover:scale-110 transition-all duration-200' onClick={() => setShowCart(false)} />
         </header>
         <div>
           {
             items.length > 0 ? (
               items.map((item, index) => (
-                <CartItems key={index} image={item.food_image} name={item.food_name} price={item.price} quantity={item.food_quantity} onIncrement={() => handleIncrement(item.id)} onDecrement={() => handleDecrement(item.id)} onDelete={() => handleDelete(item.id)} />
+                <CartItems key={index} image={item.food_image} name={item.food_name} price={item.price} quantity={item.food_quantity || 1} onIncrement={() => handleIncrement(item.id)} onDecrement={() => handleDecrement(item.id)} onDelete={() => handleDelete(item.id)} />
               ))
             ) : (
               <div className='w-full h-[80vh] flex flex-col items-center justify-center gap-6'>
@@ -103,11 +108,8 @@ const Home = () => {
             <button className='w-full bg-green-500 text-white text-xl py-3 rounded-md font-semibold hover:bg-green-600 transition-all duration-300' onClick={() => toast.success("Order Placed Successfully!")} >Checkout Now</button>
           </div>
         </div>
-
-      </div>
-
-
-    </div>
+      </aside>
+    </main>
   )
 }
 

@@ -1,13 +1,14 @@
 import React from 'react'
 import { RiDeleteBin5Line } from 'react-icons/ri';
 
+
 const CartItems = ({ image, name, price, quantity, onIncrement, onDecrement, onDelete }) => {
   return (
     <div className='w-full h-[150px] shadow-lg p-2 flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-4'>
         {/* image */}
         <div className='w-full sm:w-[60%] h-[80px] sm:h-full flex items-center justify-center gap-2 sm:gap-4 p-1 sm:p-2'>
             <div className='w-[60px] sm:w-[60%] h-[60px] sm:h-full overflow-hidden rounded-lg'>
-                <img src={image} alt="image1" className='w-full h-full object-cover' />
+                <img src={image} alt={name || 'Food item'} className='w-full h-full object-cover' />
             </div>
             <div className='flex-1 sm:w-[40%] h-full flex flex-col items-start justify-between gap-1'>
                 <div className='font-semibold text-xl truncate w-full'>

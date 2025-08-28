@@ -9,11 +9,16 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 
-createRoot(document.getElementById('root')).render(
-  <Provider store={store}>
-    <UserContext>
-      <App />
-      <ToastContainer />
-    </UserContext>
-  </Provider>
-)
+const rootElement = document.getElementById('root');
+if (rootElement) {
+  createRoot(rootElement).render(
+    <Provider store={store}>
+      <UserContext>
+        <App />
+        <ToastContainer />
+      </UserContext>
+    </Provider>
+  );
+} else {
+  console.error('Root element not found');
+}
