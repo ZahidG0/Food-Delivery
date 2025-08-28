@@ -3,6 +3,7 @@ import { LuVegan } from 'react-icons/lu';
 import { GiChickenOven } from 'react-icons/gi'
 import { useDispatch } from 'react-redux';
 import { addItem } from '../redux/cartSlice';
+import { toast } from 'react-toastify';
 
 const Cart = ({ cartItems }) => {
   const dispatch = useDispatch();
@@ -21,7 +22,10 @@ const Cart = ({ cartItems }) => {
                 <p className='text-xl font-bold text-green-600'>${item.price}</p> <span className='text-green-500 text-sm'>{item.food_type === 'veg' ? <LuVegan /> : <GiChickenOven />} {item.food_type}</span>
               </div>
               <button className='mt-4 w-full bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition-all duration-300'
-              onClick={() => dispatch(addItem({ id: item.id, food_name: item.food_name, price: item.price, food_image: item.food_image, food_quantity: 1 }))}>
+              onClick={() => {
+                dispatch(addItem({ id: item.id, food_name: item.food_name, price: item.price, food_image: item.food_image, food_quantity: 1 }));
+                toast.success(`${item.food_name} added to cart!`);
+              }}>
               {ADD_TO_CART_TEXT}</button>
             </div>
           </div>
